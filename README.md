@@ -4,9 +4,9 @@
 
 
 ## Authors
-* George He
+* George He [@georgehe4]
 
-* Susanna Souv
+* Susanna Souv [@susannasouv]
 
 ## GrepIRL exists to help people find useful resources such as power outlets, restrooms, and meeting areas.
 
