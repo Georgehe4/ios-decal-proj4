@@ -8,8 +8,9 @@
 
 * Susanna Souv [@susannasouv]
 
-## GrepIRL exists to help people find useful resources such as power outlets,
- restrooms, and meeting areas.
+## Purpose
+GrepIRL exists to help people find useful resources such as power outlets,
+restrooms, and meeting areas.
 
 ## Features
 * Rating 
@@ -22,25 +23,25 @@
 ## Control Flow
 * Open app
 * List view of items nearby
-** Optional map view of items
+   * Optional map view of items
 * Tap on an item to open it (information about reviews, pictures, etc)
 * Option to add review/add item
-** Tag/classify/rate/pictures
+    * Tag/classify/rate/pictures
 
 ## Implementation
 
 ### Model
 * Rating.swift
-** ID to item
-** 1~5 rating
-** Description
-** Optional picture
-** Rating helpfulness 
+    * ID to item
+    * 1~5 rating
+    * Description
+    * Optional picture
+    * Rating helpfulness 
 
 * Item.swift
-** Geolocation of item
-** Description of item
-** Tags of item
+    * Geolocation of item
+    * Description of item
+    * Tags of item
 
 ### View
 * RatingListTableView
