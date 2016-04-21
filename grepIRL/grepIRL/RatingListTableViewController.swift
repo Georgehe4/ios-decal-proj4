@@ -19,7 +19,7 @@ class RatingListTableViewController: UITableViewController {
         
         tableView.registerClass(RatingListTableViewCell.self, forCellReuseIdentifier: "cellId")
         
-        tableView.sectionHeaderHeight = 50
+        tableView.sectionHeaderHeight = 49
     }
     
     override func didReceiveMemoryWarning() {
