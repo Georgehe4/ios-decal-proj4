@@ -7,3 +7,12 @@
 //
 
 import Foundation
+
+class Rating {
+    var rating: Int
+    var relatedItem: TrackedItem!
+    init (trackedItem: TrackedItem) {
+        rating = 0
+        relatedItem = trackedItem
+    }
+}
