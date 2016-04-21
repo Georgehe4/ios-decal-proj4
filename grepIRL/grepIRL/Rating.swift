@@ -6,13 +6,21 @@
 //  Copyright © 2016 George He. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class Rating {
     var rating: Int
-    var relatedItem: TrackedItem!
-    init (trackedItem: TrackedItem) {
-        rating = 0
-        relatedItem = trackedItem
+    
+    var relatedItemID: Int
+    
+    var description: String!
+    
+    var picture: UIImage?
+    
+    init (trackedItem: Int, rating: Int, description: String!, picture: UIImage?) {
+        self.rating = rating
+        self.relatedItemID = trackedItem
+        self.description = description
+        self.picture = picture
     }
 }
