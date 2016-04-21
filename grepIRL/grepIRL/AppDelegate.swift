@@ -23,8 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationController = UINavigationController(rootViewController: controller)
         window?.rootViewController = navigationController
         
-        
-        // Override point for customization after application launch.
+        UINavigationBar.appearance().backgroundColor = UIColor.redColor()
+        UIBarButtonItem.appearance().tintColor = UIColor.magentaColor()
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.blueColor()]
         return true
 
     }

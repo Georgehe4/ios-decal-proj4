@@ -11,21 +11,41 @@ import UIKit
 class RatingListTableViewController: UITableViewController {
     
     //var trackedItems: [TrackedItem]!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        navigationController?.navigationBar.frame = CGRectMake(0, 0, 3200, 500)
         navigationItem.title = "GREP_IRL"
         
         tableView.registerClass(RatingListTableViewCell.self, forCellReuseIdentifier: "cellId")
         
-        tableView.sectionHeaderHeight = 49
+        tableView.sectionHeaderHeight = 50
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add new item", style: .Plain, target: self, action: "addItem")
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Map", style: .Plain, target: self, action: "mapView")
     }
+    
+    
+    func addItem() {
+        
+    }
+    
+    
+    func mapView() {
+        
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    
     
 
     /*

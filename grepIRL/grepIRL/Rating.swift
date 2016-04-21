@@ -15,12 +15,9 @@ class Rating {
     
     var description: String!
     
-    var picture: UIImage?
-    
-    init (trackedItem: Int, rating: Int, description: String!, picture: UIImage?) {
+    init (trackedItem: Int, rating: Int, description: String!) {
         self.rating = rating
         self.relatedItemID = trackedItem
         self.description = description
-        self.picture = picture
     }
 }
