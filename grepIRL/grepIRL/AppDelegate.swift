@@ -16,11 +16,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        let mainViewController = RatingListTableViewController()
-        self.window?.rootViewController = mainViewController
-        self.window?.makeKeyAndVisible()
+        window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        window?.makeKeyAndVisible()
+        
+        let controller = RatingListTableViewController()
+        let navigationController = UINavigationController(rootViewController: controller)
+        window?.rootViewController = navigationController
+        
+        
+        // Override point for customization after application launch.
         return true
+
     }
 
     func applicationWillResignActive(application: UIApplication) {

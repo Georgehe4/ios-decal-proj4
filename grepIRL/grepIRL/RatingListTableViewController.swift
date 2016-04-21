@@ -8,14 +8,20 @@
 
 import UIKit
 
-class RatingListTableViewController: UIViewController {
-
+class RatingListTableViewController: UITableViewController {
+    
+    //var trackedItems: [TrackedItem]!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        navigationItem.title = "GREP_IRL"
+        
+        tableView.registerClass(RatingListTableViewCell.self, forCellReuseIdentifier: "cellId")
+        
+        tableView.sectionHeaderHeight = 50
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -31,5 +37,7 @@ class RatingListTableViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    
 
 }
