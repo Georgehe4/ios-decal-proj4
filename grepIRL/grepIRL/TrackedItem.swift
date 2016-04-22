@@ -12,13 +12,15 @@ import CoreLocation
 class TrackedItem {
     var location : CLLocation!
     var description : String!
+    var name: String!
     // tags will be implemented later
-    var itemPhoto : UIImage!
+    var itemPhoto : UIImage?
 
-    init(location: CLLocation, descrip: String, itemPhoto: UIImage?) {
+    init(name: String, location: CLLocation, description: String, itemPhoto: UIImage?) {
         self.location = location
-        self.description = descrip
+        self.description = description
         self.itemPhoto = itemPhoto
+        self.name = name
     }
     
 }
