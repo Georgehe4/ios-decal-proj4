@@ -42,8 +42,8 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
         let screen = UIScreen.mainScreen().bounds.size
         
         navigationItem.title = "GREP_IRL"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add new item", style: .Plain, target: self, action: "addItem")
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Map", style: .Plain, target: self, action: "mapViewScreen")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add new item", style: .Plain, target: self, action: #selector(RatingListTableViewController.addItem))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Map", style: .Plain, target: self, action: #selector(RatingListTableViewController.mapViewScreen))
         
         mapView.mapType = .Standard
         mapView.showsUserLocation = true
@@ -123,7 +123,9 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     
     
     func addItem() {
-        
+        // goes to addNewItemView
+        let addItemViewController = AddNewItemViewController()
+        self.presentViewController(addItemViewController, animated: true, completion: nil)
     }
     
     

@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         let controller = RatingListTableViewController()
+//        let controller = AddNewItemViewController()
         let navigationController = UINavigationController(rootViewController: controller)
         window?.rootViewController = navigationController
         

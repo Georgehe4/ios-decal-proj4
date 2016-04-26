@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A925FF61CCF66AF002A8EC2 /* AddNewItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A925FF51CCF66AF002A8EC2 /* AddNewItemViewController.swift */; };
 		5E32ECD11CC8479F0060D721 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E32ECD01CC8479F0060D721 /* AppDelegate.swift */; };
 		5E32ECD31CC8479F0060D721 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E32ECD21CC8479F0060D721 /* ViewController.swift */; };
 		5E32ECD61CC8479F0060D721 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E32ECD41CC8479F0060D721 /* Main.storyboard */; };
@@ -42,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5A925FF51CCF66AF002A8EC2 /* AddNewItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewItemViewController.swift; sourceTree = "<group>"; };
 		5E32ECCD1CC8479F0060D721 /* grepIRL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = grepIRL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E32ECD01CC8479F0060D721 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5E32ECD21CC8479F0060D721 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 				5E32ED061CC849660060D721 /* RatingListTableViewController.swift */,
 				5E32ED081CC8497B0060D721 /* AddRatingViewController.swift */,
 				5E32ED0A1CC849880060D721 /* SingleRatingViewController.swift */,
+				5A925FF51CCF66AF002A8EC2 /* AddNewItemViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 				5E32ED141CC84AA20060D721 /* TrackedItem.swift in Sources */,
 				5E32ECD11CC8479F0060D721 /* AppDelegate.swift in Sources */,
 				5E32ED0D1CC8499B0060D721 /* ItemSummaryViewController.swift in Sources */,
+				5A925FF61CCF66AF002A8EC2 /* AddNewItemViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

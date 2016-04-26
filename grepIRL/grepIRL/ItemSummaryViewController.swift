@@ -9,7 +9,6 @@
 import UIKit
 
 class ItemSummaryViewController: UIViewController {
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
