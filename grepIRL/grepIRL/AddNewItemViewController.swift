@@ -14,6 +14,7 @@ class AddNewItemViewController: UIViewController {
     var itemImage : UIImage!
     var itemLocation : CLLocation!
     var itemDescription : String = ""
+    var locationName : String = "Location not yet set"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,12 +48,38 @@ class AddNewItemViewController: UIViewController {
         self.view.addSubview(itemDescripLabel)
         
         let itemDTFx = itemImageX
-        let itemDTFy = itemImageY + itemImageHeight + itemDLheight + spacing
+        let itemDTFy = itemDLy + itemDLheight + spacing
         let itemDTFwidth = itemImageWidth
         let itemDTFheight = CGFloat(40)
         let itemDescripTextfield = UITextField(frame: CGRectMake(itemDTFx, itemDTFy, itemDTFwidth, itemDTFheight))
         itemDescripTextfield.backgroundColor = UIColor.whiteColor()
         self.view.addSubview(itemDescripTextfield)
+        
+        if self.itemLocation != nil {
+            CLGeocoder().reverseGeocodeLocation(self.itemLocation, completionHandler: {
+                (placemarks, error) -> Void in
+                if error != nil {
+                    print("Reverse geocoder failed with error" + error!.localizedDescription)
+                    self.locationName = "Location not found"
+                }
+                if placemarks!.count > 0 {
+                    let pm = placemarks![0] as CLPlacemark
+                    self.locationName = pm.name!
+                }
+                else {
+                    self.locationName = "Location not found"
+                }
+            })
+        }
+        
+        let itemLocLabelX = itemDTFx
+        let itemLocLabelY = itemDTFy + itemDTFheight + spacing
+        let itemLocLabelWidth = itemDLwidth
+        let itemLocLabelHeight = CGFloat(40)
+        let itemLocLabel = UILabel(frame: CGRectMake(itemLocLabelX, itemLocLabelY, itemLocLabelWidth, itemLocLabelHeight))
+        itemLocLabel.textColor = UIColor.whiteColor()
+        itemLocLabel.text = self.locationName
+        self.view.addSubview(itemLocLabel)
     }
     
 
