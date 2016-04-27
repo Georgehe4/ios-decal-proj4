@@ -11,6 +11,7 @@ import CoreLocation
 
 class AddNewItemViewController: UIViewController {
     
+    var itemName : String = "NEW ITEM"
     var itemImage : UIImage!
     var itemLocation : CLLocation!
     var itemDescription : String = ""
@@ -18,8 +19,11 @@ class AddNewItemViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
+        navigationItem.title = "Add Item"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(AddNewItemViewController.cancelItem))
+        
         let spacing = CGFloat(10)
         let screen = UIScreen.mainScreen().bounds.size
         var itemImageView : UIImageView!
@@ -62,7 +66,6 @@ class AddNewItemViewController: UIViewController {
         let itemLocLabelHeight = CGFloat(40)
         let itemLocLabel = UILabel(frame: CGRectMake(itemLocLabelX, itemLocLabelY, itemLocLabelWidth, itemLocLabelHeight))
         itemLocLabel.textColor = UIColor.whiteColor()
-        print(self.locationName)
         itemLocLabel.text = self.locationName
 
         if let location = self.itemLocation {
@@ -77,8 +80,7 @@ class AddNewItemViewController: UIViewController {
                 if pm.count > 0 {
                     let pmFirst = pm[0]
                     self.locationName = pmFirst.name!
-                    itemLocLabel.text = pmFirst.name!
-                    print("RENAMING LOCATION")
+                    itemLocLabel.text = "Location: " + pmFirst.name!
                 }
                 else {
                     self.locationName = "Location not found"
@@ -86,7 +88,7 @@ class AddNewItemViewController: UIViewController {
             })
         }
         
-                self.view.addSubview(itemLocLabel)
+        self.view.addSubview(itemLocLabel)
     }
     
 
@@ -95,7 +97,19 @@ class AddNewItemViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    func cancelItem() {
+        let svc = self.navigationController!.viewControllers[0] as! RatingListTableViewController
+        let addedItem = TrackedItem(name: itemName, location: itemLocation, description: itemDescription, itemPhoto: itemImage)
+        svc.items.append(addedItem)
+        print(svc.items)
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let svc = segue.destinationViewController as! RatingListTableViewController
+        let addedItem = TrackedItem(name: itemName, location: itemLocation, description: itemDescription, itemPhoto: itemImage)
+        svc.items.append(addedItem)
+    }
     /*
     // MARK: - Navigation
 

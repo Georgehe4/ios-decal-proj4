@@ -128,7 +128,8 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
         print(mapView.userLocation.location)
         addItemViewController.itemLocation = mapView.userLocation.location
 //        print(addItemViewController.itemLocation != nil)
-        self.presentViewController(addItemViewController, animated: true, completion: nil)
+//        self.presentViewController(addItemViewController, animated: true, completion: nil)
+        self.navigationController?.pushViewController(addItemViewController, animated: true)
     }
     
     
