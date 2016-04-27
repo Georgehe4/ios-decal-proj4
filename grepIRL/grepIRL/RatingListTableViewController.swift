@@ -125,8 +125,9 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     func addItem() {
         // goes to addNewItemView
         let addItemViewController = AddNewItemViewController()
+        print(mapView.userLocation.location)
         addItemViewController.itemLocation = mapView.userLocation.location
-        print(addItemViewController.itemLocation != nil)
+//        print(addItemViewController.itemLocation != nil)
         self.presentViewController(addItemViewController, animated: true, completion: nil)
     }
     

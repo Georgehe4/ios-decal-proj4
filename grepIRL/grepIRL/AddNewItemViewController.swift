@@ -55,22 +55,6 @@ class AddNewItemViewController: UIViewController {
         itemDescripTextfield.backgroundColor = UIColor.whiteColor()
         self.view.addSubview(itemDescripTextfield)
         
-        if self.itemLocation != nil {
-            CLGeocoder().reverseGeocodeLocation(self.itemLocation, completionHandler: {
-                (placemarks, error) -> Void in
-                if error != nil {
-                    print("Reverse geocoder failed with error" + error!.localizedDescription)
-                    self.locationName = "Location not found"
-                }
-                if placemarks!.count > 0 {
-                    let pm = placemarks![0] as CLPlacemark
-                    self.locationName = pm.name!
-                }
-                else {
-                    self.locationName = "Location not found"
-                }
-            })
-        }
         
         let itemLocLabelX = itemDTFx
         let itemLocLabelY = itemDTFy + itemDTFheight + spacing
@@ -78,8 +62,31 @@ class AddNewItemViewController: UIViewController {
         let itemLocLabelHeight = CGFloat(40)
         let itemLocLabel = UILabel(frame: CGRectMake(itemLocLabelX, itemLocLabelY, itemLocLabelWidth, itemLocLabelHeight))
         itemLocLabel.textColor = UIColor.whiteColor()
+        print(self.locationName)
         itemLocLabel.text = self.locationName
-        self.view.addSubview(itemLocLabel)
+
+        if let location = self.itemLocation {
+            CLGeocoder().reverseGeocodeLocation(location, completionHandler: {
+                (placemarks, error) -> Void in
+                if error != nil {
+                    print("Reverse geocoder failed with error" + error!.localizedDescription)
+                    self.locationName = "Location not found"
+                }
+                let pm = placemarks! as [CLPlacemark]
+                print(pm.count)
+                if pm.count > 0 {
+                    let pmFirst = pm[0]
+                    self.locationName = pmFirst.name!
+                    itemLocLabel.text = pmFirst.name!
+                    print("RENAMING LOCATION")
+                }
+                else {
+                    self.locationName = "Location not found"
+                }
+            })
+        }
+        
+                self.view.addSubview(itemLocLabel)
     }
     
 
