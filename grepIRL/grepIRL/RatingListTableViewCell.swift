@@ -23,6 +23,16 @@ class RatingListTableViewCell: UITableViewCell {
         // Configure the view for the selected state
         if (selected) {
             detailTextLabel?.text = trackedItem.itemDescription
+            if let ratings = trackedItem.ratings  {
+                detailTextLabel?.numberOfLines = (detailTextLabel?.numberOfLines)! + 1
+                detailTextLabel!.text?.appendContentsOf("\n Ratings: ")
+                for rating in ratings {
+                    detailTextLabel?.numberOfLines = (detailTextLabel?.numberOfLines)! + 1
+                    detailTextLabel!.text?.appendContentsOf("\n " + String(rating.rating) + ": " + rating.ratingDescription)
+                }
+                
+            }
+            
         }
         else {
             detailTextLabel?.text = ""
