@@ -21,7 +21,9 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     
     var ratings: [Int: [Rating]] = [:] //Map from objectID to rating
     
-    let ownObject: TrackedItem = TrackedItem(name: "ME",location: CLLocation(latitude: CLLocationDegrees("0")!, longitude: CLLocationDegrees("0")!), description: "SOMETHING", itemPhoto: UIImage(named:"Placeholder"), id:TrackedItem.generateItemKey())
+    let ownObject: TrackedItem = TrackedItem(name: "ME",location: CLLocation(latitude: CLLocationDegrees("0")!, longitude: CLLocationDegrees("0")!), description: "SOMETHING", itemPhoto: UIImage(named:"default"), id:TrackedItem.generateItemKey())
+    var ooRatings : [Rating]? { return [Rating(trackedItem: ownObject.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: ownObject.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: ownObject.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: ownObject.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: ownObject.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: ownObject.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: ownObject.itemID, rating: 5, description: "Good shit")] }
+    
     
     var items: [TrackedItem] = []
     
@@ -43,6 +45,10 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
         
         if (items.isEmpty) {
             items.append(ownObject)
+            if let _ = ooRatings {
+                print("This happened")
+                ratings[ownObject.itemID] = ooRatings
+            }
         }
         
         let screen = UIScreen.mainScreen().bounds.size
@@ -93,6 +99,11 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {        
         var cell:RatingListTableViewCell = tableView.dequeueReusableCellWithIdentifier("cell")! as! RatingListTableViewCell
         let cellItem = self.items[indexPath.row]
+        for (id, rates) in ratings {
+            if (cellItem.itemID == id) {
+                cellItem.ratings = rates
+            }
+        }
         cell = RatingListTableViewCell(style: .Subtitle, reuseIdentifier: "cell")
         cell.trackedItem = cellItem
         cell.textLabel?.text = cellItem.name
@@ -227,7 +238,14 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
         if indexPath.row == selectedRowIndex {
-            return 140
+            if (items[selectedRowIndex].ratings != nil && items[selectedRowIndex].ratings.count > 5) {
+                let ratingCount = items[selectedRowIndex].ratings.count
+                return CGFloat(140 + ((ratingCount - 5) * 20))
+            }
+            else {
+                return 140
+            }
+            
         }
         return 44
     }

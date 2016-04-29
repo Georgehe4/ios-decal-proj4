@@ -17,6 +17,8 @@ class TrackedItem: NSObject, NSCoding {
     var itemPhoto : UIImage?
     var itemID: Int
     var locationString = ""
+    
+    var ratings : [Rating]!
 
     static let DocumentsDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
     
