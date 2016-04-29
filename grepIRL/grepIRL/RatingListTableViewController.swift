@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class RatingListTableViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,MKMapViewDelegate,CLLocationManagerDelegate {
+class RatingListTableViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,MKMapViewDelegate,CLLocationManagerDelegate, AddNewItemViewControllerDelegate {
     //var trackedItems: [TrackedItem]!
     let locationManager = CLLocationManager()
     var requiresMapUpdate = false
@@ -127,6 +127,7 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
         let addItemViewController = AddNewItemViewController()
         print(mapView.userLocation.location)
         addItemViewController.itemLocation = mapView.userLocation.location
+        addItemViewController.delegate = self
 //        print(addItemViewController.itemLocation != nil)
 //        self.presentViewController(addItemViewController, animated: true, completion: nil)
         self.navigationController?.pushViewController(addItemViewController, animated: true)
@@ -143,7 +144,10 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     }
     
     
-    
+    func saveNewItem(newItem: TrackedItem) {
+        self.items.append(newItem)
+        self.tableView.reloadData()
+    }
 
     /*
     // MARK: - Navigation

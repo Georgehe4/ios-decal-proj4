@@ -9,6 +9,8 @@
 import UIKit
 
 class RatingListTableViewCell: UITableViewCell {
+    
+    // what information do we want to display?
 
     override func awakeFromNib() {
         super.awakeFromNib()
