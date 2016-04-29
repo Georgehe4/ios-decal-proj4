@@ -19,7 +19,7 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     var mapView: MKMapView! = MKMapView()
     var selectedIndex = 0
     
-    let ownObject: TrackedItem = TrackedItem(name: "ME",location: CLLocation(latitude: CLLocationDegrees("0")!, longitude: CLLocationDegrees("0")!), description: "SOMETHING", itemPhoto: UIImage(named:"Placeholder"))
+    let ownObject: TrackedItem = TrackedItem(name: "ME",location: CLLocation(latitude: CLLocationDegrees("0")!, longitude: CLLocationDegrees("0")!), description: "SOMETHING", itemPhoto: UIImage(named:"Placeholder"), id:TrackedItem.generateItemKey())
     
     var items: [TrackedItem] = []
 
@@ -34,6 +34,8 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
         }
+        
+        items = loadItems()!
         
         if (items.isEmpty) {
             items.append(ownObject)
@@ -129,11 +131,8 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     func addItem() {
         // goes to addNewItemView
         let addItemViewController = AddNewItemViewController()
-        print(mapView.userLocation.location)
         addItemViewController.itemLocation = mapView.userLocation.location
         addItemViewController.delegate = self
-//        print(addItemViewController.itemLocation != nil)
-//        self.presentViewController(addItemViewController, animated: true, completion: nil)
         self.navigationController?.pushViewController(addItemViewController, animated: true)
     }
     
@@ -151,6 +150,7 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     func saveNewItem(newItem: TrackedItem) {
         self.items.append(newItem)
         self.tableView.reloadData()
+        saveItems()
     }
 
     /*
@@ -164,6 +164,20 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     */
     
     
+    func saveItems() {
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(items, toFile: TrackedItem.ArchiveURL.path!)
+        if !isSuccessfulSave {
+            print("Failed to save meals...")
+        }
+    }
+    
+    func loadItems() -> [TrackedItem]? {
+        if let loadedItems = NSKeyedUnarchiver.unarchiveObjectWithFile(TrackedItem.ArchiveURL.path!) as? [TrackedItem] {
+            return loadedItems
+        }
+        return []
+    }
+
 
 }
 
