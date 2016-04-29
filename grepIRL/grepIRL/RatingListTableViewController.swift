@@ -19,6 +19,8 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     var mapView: MKMapView! = MKMapView()
     var selectedIndex = 0
     
+    var ratings: [Int: [Rating]] = [:] //Map from objectID to rating
+    
     let ownObject: TrackedItem = TrackedItem(name: "ME",location: CLLocation(latitude: CLLocationDegrees("0")!, longitude: CLLocationDegrees("0")!), description: "SOMETHING", itemPhoto: UIImage(named:"Placeholder"), id:TrackedItem.generateItemKey())
     
     var items: [TrackedItem] = []
@@ -172,6 +174,20 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
             return loadedItems
         }
         return []
+    }
+
+    func saveComments() {
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(ratings, toFile: Rating.ArchiveURL.path!)
+        if !isSuccessfulSave {
+            print("Failed to save meals...")
+        }
+    }
+    
+    func loadComments() -> [Int: [Rating]]? {
+        if let loadedItems = NSKeyedUnarchiver.unarchiveObjectWithFile(Rating.ArchiveURL.path!) as? [Int: [Rating]] {
+            return loadedItems
+        }
+        return [:]
     }
 
 
