@@ -98,9 +98,39 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
         
     }
     
+    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        print("You will select cell #\(indexPath.row)!")
+//        let cell:RatingListTableViewCell = tableView.cellForRowAtIndexPath(indexPath) as! RatingListTableViewCell
+//        if (cell.selected) {
+//            cell.setSelected(false, animated: true)
+//        }
+//        else {
+//            cell.setSelected(true, animated: true)
+//        }
+//        
+//        
+        return indexPath
+    }
+    
+    func tableView(tableView: UITableView, willDeselectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        print("You will deselect cell #\(indexPath.row)!")
+//        let cell:RatingListTableViewCell = tableView.cellForRowAtIndexPath(indexPath) as! RatingListTableViewCell
+//        cell.setSelected(false, animated: true)
+        return indexPath
+    }
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("You selected cell #\(indexPath.row)!")
-        let cell:RatingListTableViewCell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! RatingListTableViewCell
+//        let cell:RatingListTableViewCell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! RatingListTableViewCell
+
+        
+        
+    }
+    
+    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        print("You deselected cell #\(indexPath.row)!")
+//        let cell:RatingListTableViewCell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! RatingListTableViewCell
+
         
         
     }

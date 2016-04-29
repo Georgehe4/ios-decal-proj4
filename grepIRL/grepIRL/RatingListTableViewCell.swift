@@ -12,37 +12,27 @@ class RatingListTableViewCell: UITableViewCell {
     
     // what information do we want to display?
     let isExpandable = true
-    var isExpanded = false // default
+
     
     var cellTrackedItem : TrackedItem! = nil
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
-        // Configure the view for the selected state
-        isExpanded = selected
-        if let currItem = self.cellTrackedItem {
-            if (isExpandable) {
-                if (isExpanded) {
-                    print("UNEXPAND")
-                    
-                }
-                else {
-                    print("EXPAND")
-                }
-                textLabel?.text = currItem.name
-                
-                print(selected)
-                super.setSelected(selected, animated: animated)
-            }
-            else {
-                
-            }
+        if (selected) {
+            super.setSelected(true, animated: true)
         }
-        
+        else {
+            super.setSelected(false, animated: true)
+        }
+//        super.setSelected(selected, animated: animated)
+        // Configure the view for the selected state
+        print("Selected is...")
+        print(selected)
         
     }
 
