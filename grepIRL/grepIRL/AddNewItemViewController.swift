@@ -18,7 +18,7 @@ class AddNewItemViewController: UIViewController, UINavigationControllerDelegate
     var itemName : String = "NEW ITEM"
     var itemImage : UIImage!
     var itemLocation : CLLocation!
-    var itemDescription : String = ""
+    var itemDescription : String = "No description"
     var locationName : String = "Location not yet set"
     
     var backgroundColor : UIColor = UIColor.whiteColor()

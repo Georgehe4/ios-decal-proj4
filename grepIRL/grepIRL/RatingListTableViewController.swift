@@ -90,14 +90,13 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
         return tableView.dequeueReusableHeaderFooterViewWithIdentifier("header")
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        let cell:RatingListTableViewCell = tableView.dequeueReusableCellWithIdentifier("cell")! as! RatingListTableViewCell
-        
-        cell.textLabel?.text = self.items[indexPath.row].name 
-        cell.cellTrackedItem = self.items[indexPath.row]
-        self.selectedIndex = indexPath.row
-        
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {        
+        var cell:RatingListTableViewCell = tableView.dequeueReusableCellWithIdentifier("cell")! as! RatingListTableViewCell
+        let cellItem = self.items[indexPath.row]
+        cell = RatingListTableViewCell(style: .Subtitle, reuseIdentifier: "cell")
+        cell.trackedItem = cellItem
+        cell.textLabel?.text = cellItem.name
+        cell.detailTextLabel?.text = ""
         return cell
         
     }

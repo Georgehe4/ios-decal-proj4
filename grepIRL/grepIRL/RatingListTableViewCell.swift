@@ -10,11 +10,7 @@ import UIKit
 
 class RatingListTableViewCell: UITableViewCell {
     
-    // what information do we want to display?
-    let isExpandable = true
-
-    
-    var cellTrackedItem : TrackedItem! = nil
+    var trackedItem : TrackedItem! = nil
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,13 +21,13 @@ class RatingListTableViewCell: UITableViewCell {
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
-        if (self.selected) {
-            
+        if (selected) {
+            detailTextLabel?.text = trackedItem.itemDescription
         }
-        
-        print("Selected is...")
-        print(self.selected)
-        
+        else {
+            detailTextLabel?.text = ""
+        }
+        textLabel?.text = trackedItem.name
     }
 
 }
