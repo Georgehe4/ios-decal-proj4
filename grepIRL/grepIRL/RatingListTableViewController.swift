@@ -89,6 +89,7 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
         let cell:RatingListTableViewCell = tableView.dequeueReusableCellWithIdentifier("cell")! as! RatingListTableViewCell
         
         cell.textLabel?.text = self.items[indexPath.row].name
+        cell.cellTrackedItem = self.items[indexPath.row]
         self.selectedIndex = indexPath.row
         
         return cell
@@ -97,6 +98,9 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("You selected cell #\(indexPath.row)!")
+        let cell:RatingListTableViewCell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! RatingListTableViewCell
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
