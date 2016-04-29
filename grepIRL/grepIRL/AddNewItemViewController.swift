@@ -184,6 +184,7 @@ class AddNewItemViewController: UIViewController, UINavigationControllerDelegate
         })
         
         itemImageView.image = image
+        self.itemImage = image
         
     }
     
