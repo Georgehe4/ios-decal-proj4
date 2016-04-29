@@ -151,7 +151,7 @@ class AddNewItemViewController: UIViewController {
             self.itemDescription = itemDescription
         }
         
-        let addedItem = TrackedItem(name: itemName, location: itemLocation, description: itemDescription, itemPhoto: itemImage)
+        let addedItem = TrackedItem(name: itemName, location: itemLocation, description: itemDescription, itemPhoto: itemImage, id:TrackedItem.generateItemKey())
         delegate?.saveNewItem(addedItem)
         self.navigationController?.popViewControllerAnimated(true)
     }
