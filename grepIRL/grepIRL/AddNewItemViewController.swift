@@ -13,7 +13,7 @@ protocol AddNewItemViewControllerDelegate {
     func saveNewItem(newItem: TrackedItem)
 }
 
-class AddNewItemViewController: UIViewController {
+class AddNewItemViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     var itemName : String = "NEW ITEM"
     var itemImage : UIImage!
@@ -27,10 +27,12 @@ class AddNewItemViewController: UIViewController {
     var defaultBorderWidth : CGFloat = CGFloat(1)
     
     // view items
+    var itemImageView : UIImageView!
     var itemNameTextField : UITextField!
     var itemDescripTextField : UITextField!
     
     var delegate : AddNewItemViewControllerDelegate?
+    var imagePicker = UIImagePickerController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +46,6 @@ class AddNewItemViewController: UIViewController {
         
         let spacing = CGFloat(10)
         let screen = UIScreen.mainScreen().bounds.size
-        var itemImageView : UIImageView!
         if self.itemImage != nil {
             
         }
@@ -59,6 +60,10 @@ class AddNewItemViewController: UIViewController {
         itemImageView.frame = CGRectMake(itemImageX, itemImageY, itemImageWidth, itemImageHeight)
         itemImageView.layer.borderWidth = CGFloat(1)
         itemImageView.layer.borderColor = defaultBorderColor
+        itemImageView.userInteractionEnabled = true
+        
+        itemImageView.addGestureRecognizer(UITapGestureRecognizer(target:self, action: #selector(AddNewItemViewController.changeImage)))
+
         self.view.addSubview(itemImageView)
         
         let itemNameLx = itemImageX
@@ -166,5 +171,21 @@ class AddNewItemViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    func changeImage() {
+        imagePicker.delegate = self
+        imagePicker.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum
+        imagePicker.allowsEditing = false
+        self.presentViewController(imagePicker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!){
+        self.dismissViewControllerAnimated(true, completion: { () -> Void in
+            
+        })
+        
+        itemImageView.image = image
+        
+    }
+    
 
 }
