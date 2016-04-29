@@ -23,16 +23,14 @@ class RatingListTableViewCell: UITableViewCell {
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
-        if (selected) {
-            super.setSelected(true, animated: true)
-        }
-        else {
-            super.setSelected(false, animated: true)
-        }
-//        super.setSelected(selected, animated: animated)
+        super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
+        if (self.selected) {
+            
+        }
+        
         print("Selected is...")
-        print(selected)
+        print(self.selected)
         
     }
 

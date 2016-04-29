@@ -24,7 +24,9 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     let ownObject: TrackedItem = TrackedItem(name: "ME",location: CLLocation(latitude: CLLocationDegrees("0")!, longitude: CLLocationDegrees("0")!), description: "SOMETHING", itemPhoto: UIImage(named:"Placeholder"), id:TrackedItem.generateItemKey())
     
     var items: [TrackedItem] = []
-
+    
+    var selectedRowIndex = -1
+    var selectedRowExists = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,42 +102,35 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
         
     }
     
-    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        print("You will select cell #\(indexPath.row)!")
-//        let cell:RatingListTableViewCell = tableView.cellForRowAtIndexPath(indexPath) as! RatingListTableViewCell
-//        if (cell.selected) {
-//            cell.setSelected(false, animated: true)
-//        }
-//        else {
-//            cell.setSelected(true, animated: true)
-//        }
-//        
-//        
-        return indexPath
-    }
-    
-    func tableView(tableView: UITableView, willDeselectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        print("You will deselect cell #\(indexPath.row)!")
-//        let cell:RatingListTableViewCell = tableView.cellForRowAtIndexPath(indexPath) as! RatingListTableViewCell
-//        cell.setSelected(false, animated: true)
-        return indexPath
-    }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("You selected cell #\(indexPath.row)!")
 //        let cell:RatingListTableViewCell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! RatingListTableViewCell
-
+        var needToUpdateRows : [NSIndexPath] = [NSIndexPath]()
+        if (selectedRowIndex == -1 && !selectedRowExists) {
+            selectedRowIndex = indexPath.row
+            self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: self.selectedRowIndex, inSection: 0))?.setSelected(true, animated: true)
+            selectedRowExists = true
+            
+        }
+        else  if (selectedRowIndex != indexPath.row && selectedRowExists) {
+            self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: self.selectedRowIndex, inSection: 0))?.setSelected(false, animated: true)
+            needToUpdateRows.append(NSIndexPath(forRow: self.selectedRowIndex, inSection: 0))
+            self.selectedRowIndex = indexPath.row
+            self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: self.selectedRowIndex, inSection: 0))?.setSelected(true, animated: true)
+        }
+        else if (selectedRowIndex == indexPath.row && selectedRowExists) {
+            self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: self.selectedRowIndex, inSection: 0))?.setSelected(false, animated: true)
+            
+            selectedRowIndex = -1
+            selectedRowExists = false
+            
+        }
+        tableView.reloadRowsAtIndexPaths(needToUpdateRows, withRowAnimation: UITableViewRowAnimation.Automatic)
         
         
     }
     
-    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        print("You deselected cell #\(indexPath.row)!")
-//        let cell:RatingListTableViewCell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! RatingListTableViewCell
-
-        
-        
-    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -222,6 +217,14 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
             return loadedItems
         }
         return [:]
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        if indexPath.row == selectedRowIndex {
+            return 140
+        }
+        return 44
     }
 
 
