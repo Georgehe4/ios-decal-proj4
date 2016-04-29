@@ -23,6 +23,12 @@
 		5E32ED0F1CC84A220060D721 /* RatingListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E32ED0E1CC84A220060D721 /* RatingListTableViewCell.swift */; };
 		5E32ED121CC84A8C0060D721 /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E32ED111CC84A8C0060D721 /* Rating.swift */; };
 		5E32ED141CC84AA20060D721 /* TrackedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E32ED131CC84AA20060D721 /* TrackedItem.swift */; };
+		5E5EF14C1CD345F700CFB8B6 /* DropDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5EF14A1CD345F700CFB8B6 /* DropDown.swift */; };
+		5E5EF14D1CD345F700CFB8B6 /* DropDownCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5EF14B1CD345F700CFB8B6 /* DropDownCell.swift */; };
+		5E5EF1541CD3465B00CFB8B6 /* DPDConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5EF14F1CD3465B00CFB8B6 /* DPDConstants.swift */; };
+		5E5EF1551CD3465B00CFB8B6 /* DPDKeyboardListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5EF1501CD3465B00CFB8B6 /* DPDKeyboardListener.swift */; };
+		5E5EF1561CD3465B00CFB8B6 /* DPDUIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E5EF1511CD3465B00CFB8B6 /* DPDUIView+Extension.swift */; };
+		5E5EF1571CD3465B00CFB8B6 /* DropDownCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E5EF1531CD3465B00CFB8B6 /* DropDownCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +71,12 @@
 		5E32ED0E1CC84A220060D721 /* RatingListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingListTableViewCell.swift; sourceTree = "<group>"; };
 		5E32ED111CC84A8C0060D721 /* Rating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rating.swift; sourceTree = "<group>"; };
 		5E32ED131CC84AA20060D721 /* TrackedItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackedItem.swift; sourceTree = "<group>"; };
+		5E5EF14A1CD345F700CFB8B6 /* DropDown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropDown.swift; sourceTree = "<group>"; };
+		5E5EF14B1CD345F700CFB8B6 /* DropDownCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropDownCell.swift; sourceTree = "<group>"; };
+		5E5EF14F1CD3465B00CFB8B6 /* DPDConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DPDConstants.swift; sourceTree = "<group>"; };
+		5E5EF1501CD3465B00CFB8B6 /* DPDKeyboardListener.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DPDKeyboardListener.swift; sourceTree = "<group>"; };
+		5E5EF1511CD3465B00CFB8B6 /* DPDUIView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DPDUIView+Extension.swift"; sourceTree = "<group>"; };
+		5E5EF1531CD3465B00CFB8B6 /* DropDownCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DropDownCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +127,7 @@
 		5E32ECCF1CC8479F0060D721 /* grepIRL */ = {
 			isa = PBXGroup;
 			children = (
+				5E5EF1481CD345D200CFB8B6 /* DropDown */,
 				5E32ED101CC84A790060D721 /* Models */,
 				5E32ED011CC8480E0060D721 /* Controllers */,
 				5E32ED001CC847F40060D721 /* View */,
@@ -182,6 +195,43 @@
 				5E32ED131CC84AA20060D721 /* TrackedItem.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		5E5EF1481CD345D200CFB8B6 /* DropDown */ = {
+			isa = PBXGroup;
+			children = (
+				5E5EF14E1CD3465B00CFB8B6 /* helpers */,
+				5E5EF1521CD3465B00CFB8B6 /* resources */,
+				5E5EF1491CD345F700CFB8B6 /* src */,
+			);
+			name = DropDown;
+			sourceTree = "<group>";
+		};
+		5E5EF1491CD345F700CFB8B6 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				5E5EF14A1CD345F700CFB8B6 /* DropDown.swift */,
+				5E5EF14B1CD345F700CFB8B6 /* DropDownCell.swift */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		5E5EF14E1CD3465B00CFB8B6 /* helpers */ = {
+			isa = PBXGroup;
+			children = (
+				5E5EF14F1CD3465B00CFB8B6 /* DPDConstants.swift */,
+				5E5EF1501CD3465B00CFB8B6 /* DPDKeyboardListener.swift */,
+				5E5EF1511CD3465B00CFB8B6 /* DPDUIView+Extension.swift */,
+			);
+			path = helpers;
+			sourceTree = "<group>";
+		};
+		5E5EF1521CD3465B00CFB8B6 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				5E5EF1531CD3465B00CFB8B6 /* DropDownCell.xib */,
+			);
+			path = resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -290,6 +340,7 @@
 			files = (
 				5E32ECDB1CC8479F0060D721 /* LaunchScreen.storyboard in Resources */,
 				5E32ECD81CC8479F0060D721 /* Assets.xcassets in Resources */,
+				5E5EF1571CD3465B00CFB8B6 /* DropDownCell.xib in Resources */,
 				5E32ECD61CC8479F0060D721 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -317,14 +368,19 @@
 			files = (
 				5E32ECD31CC8479F0060D721 /* ViewController.swift in Sources */,
 				5E32ED051CC849410060D721 /* RatingMapViewController.swift in Sources */,
+				5E5EF14C1CD345F700CFB8B6 /* DropDown.swift in Sources */,
+				5E5EF1551CD3465B00CFB8B6 /* DPDKeyboardListener.swift in Sources */,
 				5E32ED071CC849660060D721 /* RatingListTableViewController.swift in Sources */,
 				5E32ED091CC8497B0060D721 /* AddRatingViewController.swift in Sources */,
 				5E32ED0F1CC84A220060D721 /* RatingListTableViewCell.swift in Sources */,
+				5E5EF14D1CD345F700CFB8B6 /* DropDownCell.swift in Sources */,
 				5E32ED0B1CC849880060D721 /* SingleRatingViewController.swift in Sources */,
 				5E32ED121CC84A8C0060D721 /* Rating.swift in Sources */,
 				5E32ED141CC84AA20060D721 /* TrackedItem.swift in Sources */,
 				5E32ECD11CC8479F0060D721 /* AppDelegate.swift in Sources */,
 				5E32ED0D1CC8499B0060D721 /* ItemSummaryViewController.swift in Sources */,
+				5E5EF1561CD3465B00CFB8B6 /* DPDUIView+Extension.swift in Sources */,
+				5E5EF1541CD3465B00CFB8B6 /* DPDConstants.swift in Sources */,
 				5A925FF61CCF66AF002A8EC2 /* AddNewItemViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

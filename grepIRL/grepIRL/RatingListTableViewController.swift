@@ -178,6 +178,12 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
         self.tableView.reloadData()
         saveItems()
     }
+    
+    func saveNewComment(newRating: Rating) {
+        self.ratings[newRating.relatedItemID]!.append(newRating)
+        self.tableView.reloadData()
+        saveRatings()
+    }
 
     /*
     // MARK: - Navigation
@@ -204,14 +210,14 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
         return []
     }
 
-    func saveComments() {
+    func saveRatings() {
         let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(ratings, toFile: Rating.ArchiveURL.path!)
         if !isSuccessfulSave {
             print("Failed to save meals...")
         }
     }
     
-    func loadComments() -> [Int: [Rating]]? {
+    func loadRatings() -> [Int: [Rating]]? {
         if let loadedItems = NSKeyedUnarchiver.unarchiveObjectWithFile(Rating.ArchiveURL.path!) as? [Int: [Rating]] {
             return loadedItems
         }
