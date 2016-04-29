@@ -94,7 +94,7 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
         
         let cell:RatingListTableViewCell = tableView.dequeueReusableCellWithIdentifier("cell")! as! RatingListTableViewCell
         
-        cell.textLabel?.text = self.items[indexPath.row].name
+        cell.textLabel?.text = self.items[indexPath.row].name + "\n" + self.items[indexPath.row].locationString
         cell.cellTrackedItem = self.items[indexPath.row]
         self.selectedIndex = indexPath.row
         

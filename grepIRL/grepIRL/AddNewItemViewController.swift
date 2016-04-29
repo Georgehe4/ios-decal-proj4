@@ -149,16 +149,25 @@ class AddNewItemViewController: UIViewController, UINavigationControllerDelegate
     }
     
     func saveItem() {
-        if let itemName = self.itemNameTextField.text {
+        if (self.itemNameTextField.text == "") {
+            let noNameAlertController = UIAlertController(
+                title: "Item needs a name!", message: "Please enter a name for the new item", preferredStyle: .Alert)
+            noNameAlertController.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+            self.presentViewController(noNameAlertController, animated: true, completion: nil)
+        }
+        else if let itemName = self.itemNameTextField.text {
             self.itemName = itemName
+            if let itemDescription = self.itemDescripTextField.text {
+                self.itemDescription = itemDescription
+            }
+            
+            let addedItem = TrackedItem(name: itemName, location: itemLocation, description: itemDescription, itemPhoto: itemImage, id:TrackedItem.generateItemKey())
+            addedItem.locationString = self.locationName
+            delegate?.saveNewItem(addedItem)
+            self.navigationController?.popViewControllerAnimated(true)
         }
-        if let itemDescription = self.itemDescripTextField.text {
-            self.itemDescription = itemDescription
-        }
+
         
-        let addedItem = TrackedItem(name: itemName, location: itemLocation, description: itemDescription, itemPhoto: itemImage, id:TrackedItem.generateItemKey())
-        delegate?.saveNewItem(addedItem)
-        self.navigationController?.popViewControllerAnimated(true)
     }
     
 

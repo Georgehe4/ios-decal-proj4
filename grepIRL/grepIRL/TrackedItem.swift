@@ -16,6 +16,7 @@ class TrackedItem: NSObject, NSCoding {
     // tags will be implemented later
     var itemPhoto : UIImage?
     var itemID: Int
+    var locationString = ""
 
     static let DocumentsDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
     
