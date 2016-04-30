@@ -108,10 +108,19 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
         cell.trackedItem = cellItem
         cell.textLabel?.text = cellItem.name
         cell.detailTextLabel?.text = ""
+        
+        let screen = UIScreen.mainScreen().bounds.size
+        let button : UIButton = UIButton()
+        let buttonWidth = CGFloat(40)
+        button.frame = CGRectMake(screen.width - buttonWidth - 10, 10, buttonWidth, 20)
+        button.backgroundColor = UIColor.redColor()
+        button.tag = indexPath.row
+        button.addTarget(self, action: #selector(RatingListTableViewController.addRating(_:)), forControlEvents: .TouchUpInside)
+        button.setTitle("Rate", forState: UIControlState.Normal)
+        cell.addSubview(button)
         return cell
         
     }
-    
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("You selected cell #\(indexPath.row)!")
@@ -171,9 +180,12 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
         self.navigationController?.pushViewController(addItemViewController, animated: true)
     }
     
-    func addRating(id: Int) {
+    func addRating(sender: UIButton!) {
         let addRatingViewController = AddRatingViewController()
+        let id = items[sender.tag].itemID
+        let name = items[sender.tag].name!
         addRatingViewController.relatedItemID = id
+        addRatingViewController.itemName = name
         addRatingViewController.delegate = self
         self.navigationController?.pushViewController(addRatingViewController, animated: true)
 

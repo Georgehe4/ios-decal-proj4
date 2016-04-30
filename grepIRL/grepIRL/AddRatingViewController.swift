@@ -36,16 +36,20 @@ class AddRatingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        dropDown.anchorView = view
-        dropDown.bottomOffset = CGPoint(x: 0, y:dropDown.anchorView!.bounds.height)
-        dropDown.dataSource = ["1", "2", "3", "4", "5"]
-        
-        
         self.view.backgroundColor = self.backgroundColor
         // Do any additional setup after loading the view.
-        navigationItem.title = "Add A Comment"
+        navigationItem.title = "Rate"
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(AddRatingViewController.cancelItem))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .Plain, target: self, action: #selector(AddRatingViewController.saveItem))
+        
+        dropDown.anchorView = self.view
+        dropDown.direction = .Any
+        dropDown.bottomOffset = CGPoint(x: 0, y:dropDown.anchorView!.bounds.height)
+        dropDown.dataSource = ["1", "2", "3", "4", "5"]
+        dropDown.width = 100
+        dropDown.dismissMode = .Automatic
+        dropDown.show()
+        self.view.addSubview(dropDown)
         
         let spacing = CGFloat(10)
         let screen = UIScreen.mainScreen().bounds.size
@@ -56,7 +60,7 @@ class AddRatingViewController: UIViewController {
         let itemNameLheight = CGFloat(40)
         let itemNameLabel = UILabel(frame: CGRectMake(itemNameLx, itemNameLy, itemNamewidth, itemNameLheight))
         itemNameLabel.textColor = textColor
-        itemNameLabel.text = "Item name"
+        itemNameLabel.text = itemName
         self.view.addSubview(itemNameLabel)
         
         let itemDLx = itemNameLx
@@ -65,9 +69,15 @@ class AddRatingViewController: UIViewController {
         let itemDLheight = CGFloat(40)
         let itemDescripLabel = UILabel(frame: CGRectMake(itemDLx, itemDLy, itemDLwidth, itemDLheight))
         itemDescripLabel.textColor = textColor
-        itemDescripLabel.text = "Item description"
+        itemDescripLabel.text = "Comments"
         self.view.addSubview(itemDescripLabel)
         
+        let itemDTFx = itemNameLx
+        let itemDTFy = itemDLy + itemDLheight + 40
+        let itemDTFwidth = CGFloat(200)
+        let itemDTFheight = CGFloat(40)
+        
+        self.itemDescripTextField = UITextField(frame: CGRectMake(itemDTFx, itemDTFy, itemDTFwidth, itemDTFheight))
         itemDescripTextField.backgroundColor = UIColor.whiteColor()
         itemDescripTextField.layer.borderColor = defaultBorderColor
         itemDescripTextField.layer.borderWidth = defaultBorderWidth
