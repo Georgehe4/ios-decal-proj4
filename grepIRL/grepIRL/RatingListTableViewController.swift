@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class RatingListTableViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,MKMapViewDelegate,CLLocationManagerDelegate, AddNewItemViewControllerDelegate {
+class RatingListTableViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,MKMapViewDelegate,CLLocationManagerDelegate, AddNewItemViewControllerDelegate, AddRatingViewControllerDelegate {
     //var trackedItems: [TrackedItem]!
     let locationManager = CLLocationManager()
     var requiresMapUpdate = false
@@ -121,7 +121,6 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
             selectedRowIndex = indexPath.row
             self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: self.selectedRowIndex, inSection: 0))?.setSelected(true, animated: true)
             selectedRowExists = true
-            
         }
         else  if (selectedRowIndex != indexPath.row && selectedRowExists) {
             self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: self.selectedRowIndex, inSection: 0))?.setSelected(false, animated: true)
@@ -166,13 +165,19 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     
     
     func addItem() {
-        // goes to addNewItemView
         let addItemViewController = AddNewItemViewController()
         addItemViewController.itemLocation = mapView.userLocation.location
         addItemViewController.delegate = self
         self.navigationController?.pushViewController(addItemViewController, animated: true)
     }
     
+    func addRating(id: Int) {
+        let addRatingViewController = AddRatingViewController()
+        addRatingViewController.relatedItemID = id
+        addRatingViewController.delegate = self
+        self.navigationController?.pushViewController(addRatingViewController, animated: true)
+
+    }
     
     func mapViewScreen() {
         
@@ -190,7 +195,7 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
         saveItems()
     }
     
-    func saveNewComment(newRating: Rating) {
+    func saveNewRating(newRating: Rating) {
         self.ratings[newRating.relatedItemID]!.append(newRating)
         self.tableView.reloadData()
         saveRatings()
@@ -210,7 +215,7 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     func saveItems() {
         let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(items, toFile: TrackedItem.ArchiveURL.path!)
         if !isSuccessfulSave {
-            print("Failed to save meals...")
+            print("Failed to save items...")
         }
     }
     
@@ -224,7 +229,7 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     func saveRatings() {
         let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(ratings, toFile: Rating.ArchiveURL.path!)
         if !isSuccessfulSave {
-            print("Failed to save meals...")
+            print("Failed to save ratings...")
         }
     }
     
