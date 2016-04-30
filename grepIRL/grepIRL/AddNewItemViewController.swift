@@ -18,7 +18,7 @@ class AddNewItemViewController: UIViewController, UINavigationControllerDelegate
     var itemName : String = "NEW ITEM"
     var itemImage : UIImage!
     var itemLocation : CLLocation!
-    var itemDescription : String = "No description"
+    var itemDescription : String!
     var locationName : String = "Location not yet set"
     
     var backgroundColor : UIColor = UIColor.whiteColor()
@@ -157,11 +157,14 @@ class AddNewItemViewController: UIViewController, UINavigationControllerDelegate
         }
         else if let itemName = self.itemNameTextField.text {
             self.itemName = itemName
-            if let itemDescription = self.itemDescripTextField.text {
-                self.itemDescription = itemDescription
+            if self.itemDescripTextField.text != "" {
+                self.itemDescription = self.itemDescripTextField.text
             }
+            else {
+                self.itemDescription = "No description"
+            }
+            let addedItem = TrackedItem(name: self.itemName, location: itemLocation, description: self.itemDescription, itemPhoto: itemImage, id:TrackedItem.generateItemKey())
             
-            let addedItem = TrackedItem(name: itemName, location: itemLocation, description: itemDescription, itemPhoto: itemImage, id:TrackedItem.generateItemKey())
             addedItem.locationString = self.locationName
             delegate?.saveNewItem(addedItem)
             self.navigationController?.popViewControllerAnimated(true)

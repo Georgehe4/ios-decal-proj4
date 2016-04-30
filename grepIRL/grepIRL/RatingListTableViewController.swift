@@ -45,8 +45,9 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
         
         if (items.isEmpty) {
             items.append(ownObject)
+            print("We have items")
             if let _ = ooRatings {
-                print("This happened")
+                print("Ratings exist")
                 ratings[ownObject.itemID] = ooRatings
             }
         }
@@ -110,10 +111,10 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
         cell.detailTextLabel?.text = ""
         
         let screen = UIScreen.mainScreen().bounds.size
-        let button : UIButton = UIButton()
+        let button : UIButton = UIButton(type: UIButtonType.System)
         let buttonWidth = CGFloat(40)
         button.frame = CGRectMake(screen.width - buttonWidth - 10, 10, buttonWidth, 20)
-        button.backgroundColor = UIColor.redColor()
+//        button.backgroundColor = UIColor.cyanColor()
         button.tag = indexPath.row
         button.addTarget(self, action: #selector(RatingListTableViewController.addRating(_:)), forControlEvents: .TouchUpInside)
         button.setTitle("Rate", forState: UIControlState.Normal)
