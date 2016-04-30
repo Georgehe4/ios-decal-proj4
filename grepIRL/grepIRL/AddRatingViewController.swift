@@ -32,7 +32,7 @@ class AddRatingViewController: UIViewController {
     var imagePicker = UIImagePickerController()
     
     let dropDown = DropDown()
-    
+    let dropDownButton = UIButton()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,29 +42,37 @@ class AddRatingViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(AddRatingViewController.cancelItem))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .Plain, target: self, action: #selector(AddRatingViewController.saveItem))
         
-        dropDown.anchorView = self.view
-        dropDown.direction = .Any
-        dropDown.bottomOffset = CGPoint(x: 0, y:dropDown.anchorView!.bounds.height)
-        dropDown.dataSource = ["1", "2", "3", "4", "5"]
-        dropDown.width = 100
-        dropDown.dismissMode = .Automatic
-        dropDown.show()
-        self.view.addSubview(dropDown)
         
         let spacing = CGFloat(10)
         let screen = UIScreen.mainScreen().bounds.size
         
         let itemNamewidth = CGFloat(200)
         let itemNameLx = screen.width/2 - 100
-        let itemNameLy = screen.height/2 - 100
+        let itemNameLy = CGFloat(100)
         let itemNameLheight = CGFloat(40)
         let itemNameLabel = UILabel(frame: CGRectMake(itemNameLx, itemNameLy, itemNamewidth, itemNameLheight))
         itemNameLabel.textColor = textColor
         itemNameLabel.text = itemName
         self.view.addSubview(itemNameLabel)
         
+        dropDownButton.setTitle("Rate", forState: UIControlState.Normal)
+        let buttonY = itemNameLy + spacing + itemNameLheight
+        let buttonHeight = CGFloat(40)
+        let buttonWidth = CGFloat(100)
+        dropDownButton.frame = CGRectMake(itemNameLx, itemNameLy + itemNameLheight+spacing, buttonWidth, buttonHeight)
+        dropDownButton.backgroundColor = UIColor.redColor()
+        dropDownButton.addTarget(self, action: #selector(self.showOrDismiss(_:)), forControlEvents: .TouchUpInside)
+        self.view.addSubview(dropDownButton)
+        
+        dropDown.anchorView = dropDownButton
+        dropDown.direction = .Any
+        dropDown.bottomOffset = CGPoint(x: 0, y:dropDown.anchorView!.bounds.height)
+        dropDown.dataSource = ["1", "2", "3", "4", "5"]
+        dropDown.width = 100
+        dropDown.dismissMode = .Automatic
+        
         let itemDLx = itemNameLx
-        let itemDLy = itemNameLy + itemNameLheight + spacing
+        let itemDLy = buttonY + buttonHeight + spacing
         let itemDLwidth = CGFloat(200)
         let itemDLheight = CGFloat(40)
         let itemDescripLabel = UILabel(frame: CGRectMake(itemDLx, itemDLy, itemDLwidth, itemDLheight))
@@ -85,7 +93,14 @@ class AddRatingViewController: UIViewController {
         self.view.addSubview(itemDescripTextField)
     }
     
-    
+    func showOrDismiss(sender: AnyObject) {
+        if dropDown.hidden {
+            dropDown.show()
+        } else {
+            dropDown.hide()
+        }
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
