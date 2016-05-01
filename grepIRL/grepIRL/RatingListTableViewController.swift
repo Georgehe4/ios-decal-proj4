@@ -315,6 +315,8 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     }
     
     func filterContentForSearchText(searchText: String, scope: String = "All") {
+        let newTblViewFrm = CGRectMake(searchController.searchBar.frame.minX, searchController.searchBar.frame.minY, tableView.frame.width, tableView.frame.height + (tableView.frame.minY - searchController.searchBar.frame.minY))
+        tableView.frame = newTblViewFrm
         
         filterItems = items.filter { item in
             return item.name.lowercaseString.containsString(searchText.lowercaseString)
