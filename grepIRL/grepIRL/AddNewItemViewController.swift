@@ -46,6 +46,7 @@ class AddNewItemViewController: UIViewController, UINavigationControllerDelegate
         
         let spacing = CGFloat(10)
         let screen = UIScreen.mainScreen().bounds.size
+        let standardCornerRadius = CGFloat(5)
         if self.itemImage != nil {
             
         }
@@ -60,6 +61,8 @@ class AddNewItemViewController: UIViewController, UINavigationControllerDelegate
         itemImageView.frame = CGRectMake(itemImageX, itemImageY, itemImageWidth, itemImageHeight)
         itemImageView.layer.borderWidth = CGFloat(1)
         itemImageView.layer.borderColor = defaultBorderColor
+        itemImageView.layer.cornerRadius = standardCornerRadius
+        itemImageView.layer.masksToBounds = true
         itemImageView.userInteractionEnabled = true
         
         itemImageView.addGestureRecognizer(UITapGestureRecognizer(target:self, action: #selector(AddNewItemViewController.changeImage)))
@@ -83,7 +86,8 @@ class AddNewItemViewController: UIViewController, UINavigationControllerDelegate
         itemNameTextField.backgroundColor = UIColor.whiteColor()
         itemNameTextField.layer.borderColor = defaultBorderColor
         itemNameTextField.layer.borderWidth = defaultBorderWidth
-        itemNameTextField.borderStyle = UITextBorderStyle.RoundedRect
+        itemNameTextField.layer.cornerRadius = standardCornerRadius
+        itemNameTextField.layer.masksToBounds = true
         self.view.addSubview(itemNameTextField)
         
         let itemDLx = itemImageX
@@ -103,7 +107,8 @@ class AddNewItemViewController: UIViewController, UINavigationControllerDelegate
         itemDescripTextField.backgroundColor = UIColor.whiteColor()
         itemDescripTextField.layer.borderColor = defaultBorderColor
         itemDescripTextField.layer.borderWidth = defaultBorderWidth
-        itemDescripTextField.borderStyle = UITextBorderStyle.RoundedRect
+        itemDescripTextField.layer.cornerRadius = standardCornerRadius
+        itemDescripTextField.layer.masksToBounds = true
         self.view.addSubview(itemDescripTextField)
         
         let itemLocLabelX = itemDTFx

@@ -61,7 +61,7 @@ class AddRatingViewController: UIViewController {
         let buttonHeight = CGFloat(40)
         let buttonWidth = CGFloat(40)
         
-        ratingLabel.frame = CGRectMake(itemNameLx, itemNameLy + itemNameLheight+spacing, CGFloat(60), buttonHeight)
+        ratingLabel.frame = CGRectMake(itemNameLx, itemNameLy + itemNameLheight+spacing, CGFloat(40), buttonHeight)
         ratingLabel.text = "-"
         ratingLabel.layer.borderWidth = CGFloat(1)
         ratingLabel.layer.borderColor = UIColor.grayColor().CGColor
@@ -94,15 +94,16 @@ class AddRatingViewController: UIViewController {
         self.view.addSubview(itemDescripLabel)
         
         let itemDTFx = itemNameLx
-        let itemDTFy = itemDLy + itemDLheight + 40
+        let itemDTFy = itemDLy + itemDLheight + 10
         let itemDTFwidth = CGFloat(200)
         let itemDTFheight = CGFloat(40)
         
         self.itemDescripTextField = UITextField(frame: CGRectMake(itemDTFx, itemDTFy, itemDTFwidth, itemDTFheight))
         itemDescripTextField.backgroundColor = UIColor.whiteColor()
-        itemDescripTextField.layer.borderColor = defaultBorderColor
-        itemDescripTextField.layer.borderWidth = defaultBorderWidth
-        itemDescripTextField.borderStyle = UITextBorderStyle.RoundedRect
+        itemDescripTextField.layer.borderColor = UIColor.grayColor().CGColor
+        itemDescripTextField.layer.borderWidth = CGFloat(1)
+        itemDescripTextField.layer.cornerRadius = CGFloat(5)
+        itemDescripTextField.layer.masksToBounds = true
         self.view.addSubview(itemDescripTextField)
     }
     
@@ -127,15 +128,23 @@ class AddRatingViewController: UIViewController {
     }
     
     func saveItem() {
-        let item = Int(dropDown.selectedItem!)
-        var ratingDescrip = self.itemDescripTextField.text
-        if (ratingDescrip == "") {
-            ratingDescrip = "No comment"
+        if let ratingValue = dropDown.selectedItem {
+            let item = Int(ratingValue)
+            var ratingDescrip = self.itemDescripTextField.text
+            if (ratingDescrip == "") {
+                ratingDescrip = "No comment"
+            }
+            
+            let addedRating = Rating(trackedItem: relatedItemID, rating: item!, description: ratingDescrip)
+            delegate?.saveNewRating(addedRating)
+            self.navigationController?.popViewControllerAnimated(true)
         }
-
-        let addedRating = Rating(trackedItem: relatedItemID, rating: item!, description: ratingDescrip)
-        delegate?.saveNewRating(addedRating)
-        self.navigationController?.popViewControllerAnimated(true)
+        else {
+            let invalidRatingAlertController = UIAlertController(title: "Invalid rating", message: "Please select a rating", preferredStyle: .Alert)
+            invalidRatingAlertController.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+            self.presentViewController(invalidRatingAlertController, animated: true, completion: nil)
+        }
+        
     }
     
 
