@@ -20,6 +20,7 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     var selectedIndex = 0
     
     var ratings: [Int: [Rating]] = [:] //Map from objectID to rating
+    let allowedTags = ["All", "Food", "Sports", "Fun", "Random"]
     
     let seedItem: TrackedItem = TrackedItem(name: "ME",location: CLLocation(latitude: CLLocationDegrees("40.730872")!, longitude: CLLocationDegrees("-74.003066")!), description: "SOMETHING", itemPhoto: UIImage(named:"default"), id:TrackedItem.generateItemKey())
     var seedItemRatings : [Rating]? { return [Rating(trackedItem: seedItem.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: seedItem.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: seedItem.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: seedItem.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: seedItem.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: seedItem.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: seedItem.itemID, rating: 5, description: "Good shit")] }
@@ -38,8 +39,9 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
         definesPresentationContext = true
-        searchController.hidesNavigationBarDuringPresentation = false
+//        searchController.hidesNavigationBarDuringPresentation = false
         tableView.tableHeaderView = searchController.searchBar
+        searchController.searchBar.scopeButtonTitles = allowedTags
         
         
         self.requiresMapUpdate = true
@@ -141,8 +143,8 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
         cell.textLabel?.text = cellItem.name
         cell.detailTextLabel?.text = ""
         let imgviewFrame = CGRectMake(cell.frame.minX + 10, cell.frame.minY + 10, cell.frame.width - 20, cell.frame.height - 20)
-        cell.imageView?.frame = imgviewFrame
         cell.imageView!.image = cellItem.itemPhoto
+        cell.imageView?.frame = imgviewFrame
         
         let screen = UIScreen.mainScreen().bounds.size
         let button : UIButton = UIButton(type: UIButtonType.System)
@@ -328,13 +330,16 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     }
     
     func updateSearchResultsForSearchController(_: UISearchController) {
-        filterContentForSearchText(searchController.searchBar.text!)
+        let searchBar = searchController.searchBar
+        let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
+        filterContentForSearchText(searchController.searchBar.text!, scope: scope)
     }
     
     func filterContentForSearchText(searchText: String, scope: String = "All") {
         searchController.searchBar.sizeToFit()
         filterItems = items.filter { item in
-            return item.name.lowercaseString.containsString(searchText.lowercaseString)
+            let categoryMatch = (scope == "All") || (item.tags!.contains(scope))
+            return categoryMatch && item.name.lowercaseString.containsString(searchText.lowercaseString)
         }
         
         tableView.reloadData()
