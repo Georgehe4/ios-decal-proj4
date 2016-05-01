@@ -57,7 +57,7 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
         
         navigationItem.title = "GREP_IRL"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add new item", style: .Plain, target: self, action: #selector(RatingListTableViewController.addItem))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Map", style: .Plain, target: self, action: #selector(RatingListTableViewController.mapViewScreen))
+        //navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Map", style: .Plain, target: self, action: #selector(RatingListTableViewController.mapViewScreen))
         
         mapView.mapType = .Standard
         mapView.showsUserLocation = true
