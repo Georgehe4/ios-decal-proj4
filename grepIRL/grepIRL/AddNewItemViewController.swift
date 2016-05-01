@@ -33,6 +33,10 @@ class AddNewItemViewController: UIViewController, UINavigationControllerDelegate
     
     var delegate : AddNewItemViewControllerDelegate?
     var imagePicker = UIImagePickerController()
+    
+    let dropDown = DropDown()
+    let tagLabel = UILabel()
+    let dropDownButton = UIButton(type: UIButtonType.System)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +48,7 @@ class AddNewItemViewController: UIViewController, UINavigationControllerDelegate
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(AddNewItemViewController.cancelItem))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .Plain, target: self, action: #selector(AddNewItemViewController.saveItem))
         
-        let spacing = CGFloat(10)
+        let spacing = CGFloat(5)
         let screen = UIScreen.mainScreen().bounds.size
         let standardCornerRadius = CGFloat(5)
         if self.itemImage != nil {
@@ -68,9 +72,40 @@ class AddNewItemViewController: UIViewController, UINavigationControllerDelegate
         itemImageView.addGestureRecognizer(UITapGestureRecognizer(target:self, action: #selector(AddNewItemViewController.changeImage)))
 
         self.view.addSubview(itemImageView)
+        let buttonY = itemImageY + itemImageHeight + spacing
+        let buttonHeight = CGFloat(40)
+        let buttonWidth = CGFloat(40)
+        let tagLabelX = itemImageX + itemImageWidth - CGFloat(140)
+        let tagNameLabel = UILabel(frame: CGRectMake(itemImageX, buttonY, buttonWidth, buttonHeight))
+        tagNameLabel.textColor = textColor
+        tagNameLabel.text = "Tags"
+        self.view.addSubview(tagNameLabel)
+        
+        tagLabel.frame = CGRectMake(tagLabelX, buttonY, CGFloat(100), buttonHeight)
+        tagLabel.text = "-"
+        tagLabel.layer.borderWidth = CGFloat(1)
+        tagLabel.layer.borderColor = UIColor.grayColor().CGColor
+        tagLabel.textAlignment = NSTextAlignment.Center
+        tagLabel.layer.cornerRadius = CGFloat(5)
+        tagLabel.layer.masksToBounds = true
+        self.view.addSubview(tagLabel)
+        dropDownButton.setTitle("🔽", forState: UIControlState.Normal)
+        dropDownButton.frame = CGRectMake(tagLabelX + tagLabel.frame.width + CGFloat(5), buttonY, buttonWidth, buttonHeight)
+        //        dropDownButton.backgroundColor = UIColor.redColor()
+        dropDownButton.addTarget(self, action: #selector(self.showOrDismiss(_:)), forControlEvents: .TouchUpInside)
+        self.view.addSubview(dropDownButton)
+        
+        
+        dropDown.anchorView = dropDownButton
+        dropDown.direction = .Any
+        dropDown.bottomOffset = CGPoint(x: 0, y:dropDown.anchorView!.bounds.height)
+        dropDown.dataSource = ["Food", "Sports", "Fun", "Random"]
+        dropDown.width = 100
+        dropDown.dismissMode = .Automatic
+        dropDown.valueLabel = tagLabel
         
         let itemNameLx = itemImageX
-        let itemNameLy = itemImageY + itemImageHeight + spacing
+        let itemNameLy = buttonY+buttonHeight+spacing
         let itemNameLwidth = itemImageWidth
         let itemNameLheight = CGFloat(40)
         let itemNameLabel = UILabel(frame: CGRectMake(itemNameLx, itemNameLy, itemNameLwidth, itemNameLheight))
@@ -148,6 +183,18 @@ class AddNewItemViewController: UIViewController, UINavigationControllerDelegate
         // Dispose of any resources that can be recreated.
     }
     
+    func showOrDismiss(sender: AnyObject) {
+        if dropDown.hidden {
+            dropDown.show()
+        } else {
+            if let selectedItemString = dropDown.selectedItem {
+                tagLabel.text = selectedItemString
+            }
+            dropDown.hide()
+        }
+    }
+
+    
     func cancelItem() {
         self.navigationController?.popViewControllerAnimated(true)
 
@@ -168,11 +215,26 @@ class AddNewItemViewController: UIViewController, UINavigationControllerDelegate
             else {
                 self.itemDescription = "No description"
             }
-            let addedItem = TrackedItem(name: self.itemName, location: itemLocation, description: self.itemDescription, itemPhoto: itemImage, id:TrackedItem.generateItemKey())
-            
-            addedItem.locationString = self.locationName
-            delegate?.saveNewItem(addedItem)
-            self.navigationController?.popViewControllerAnimated(true)
+            if itemLocation == nil {
+                let alert = UIAlertController(title: "No Location Provided", message: "Please make sure location services is turned on", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+            else {
+                if let tag = dropDown.selectedItem {
+                    let addedItem = TrackedItem(name: self.itemName, location: itemLocation, description: self.itemDescription, itemPhoto: itemImage, id:TrackedItem.generateItemKey(), tags: [tag])
+                    addedItem.locationString = self.locationName
+                    delegate?.saveNewItem(addedItem)
+                    self.navigationController?.popViewControllerAnimated(true)
+                }
+                else {
+                    let invalidRatingAlertController = UIAlertController(title: "Invalid tag", message: "Please select a tag", preferredStyle: .Alert)
+                    invalidRatingAlertController.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+                    self.presentViewController(invalidRatingAlertController, animated: true, completion: nil)
+
+                }
+                
+            }
         }
 
         

@@ -56,7 +56,7 @@ class AddRatingViewController: UIViewController {
         itemNameLabel.text = itemName
         self.view.addSubview(itemNameLabel)
         
-        dropDownButton.setTitle("🔽", forState: UIControlState.Normal)
+        
         let buttonY = itemNameLy + spacing + itemNameLheight
         let buttonHeight = CGFloat(40)
         let buttonWidth = CGFloat(40)
@@ -69,7 +69,7 @@ class AddRatingViewController: UIViewController {
         ratingLabel.layer.cornerRadius = CGFloat(5)
         ratingLabel.layer.masksToBounds = true
         self.view.addSubview(ratingLabel)
-        
+        dropDownButton.setTitle("🔽", forState: UIControlState.Normal)
         dropDownButton.frame = CGRectMake(itemNameLx + ratingLabel.frame.width + CGFloat(5), itemNameLy + itemNameLheight+spacing, buttonWidth, buttonHeight)
 //        dropDownButton.backgroundColor = UIColor.redColor()
         dropDownButton.addTarget(self, action: #selector(self.showOrDismiss(_:)), forControlEvents: .TouchUpInside)

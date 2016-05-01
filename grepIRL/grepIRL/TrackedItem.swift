@@ -18,11 +18,23 @@ class TrackedItem: NSObject, NSCoding {
     var itemID: Int
     var locationString = ""
     
+    var tags:[String]? = [String]()
     var ratings : [Rating]!
 
     static let DocumentsDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
     
     static let ArchiveURL = DocumentsDirectory.URLByAppendingPathComponent("trackedItems")
+    
+    init(name: String, location: CLLocation, description: String, itemPhoto: UIImage?, id: Int, tags: [String]?) {
+        self.location = location
+        self.itemDescription = description
+        self.itemPhoto = itemPhoto
+        self.name = name
+        self.itemID = id
+        if tags != nil {
+            self.tags = tags!
+        }
+    }
     
     init(name: String, location: CLLocation, description: String, itemPhoto: UIImage?, id: Int) {
         self.location = location
@@ -44,12 +56,14 @@ class TrackedItem: NSObject, NSCoding {
         static let nameKey = "name"
         static let photoKey = "photo"
         static let idKey = "id"
+        static let tagKey = "tags"
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(name, forKey: PropertyKey.nameKey)
         aCoder.encodeObject(itemPhoto, forKey: PropertyKey.photoKey)
         aCoder.encodeObject(location, forKey: PropertyKey.locationKey)
+        aCoder.encodeObject(tags, forKey: PropertyKey.tagKey)
         aCoder.encodeObject(itemDescription, forKey: PropertyKey.descriptionKey)
         aCoder.encodeInteger(itemID, forKey: PropertyKey.idKey)
     }
@@ -65,7 +79,9 @@ class TrackedItem: NSObject, NSCoding {
         
         let id = aDecoder.decodeIntegerForKey(PropertyKey.idKey)
         
+        let tags = aDecoder.decodeObjectForKey(PropertyKey.tagKey) as? [String]
+        
         // Must call designated initializer.
-        self.init(name: name, location:location, description:description, itemPhoto: photo, id:id)
+        self.init(name: name, location:location, description:description, itemPhoto: photo, id:id, tags:tags)
     }
 }
