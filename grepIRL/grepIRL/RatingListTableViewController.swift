@@ -21,7 +21,7 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     
     var ratings: [Int: [Rating]] = [:] //Map from objectID to rating
     
-    let seedItem: TrackedItem = TrackedItem(name: "ME",location: CLLocation(latitude: CLLocationDegrees("0")!, longitude: CLLocationDegrees("0")!), description: "SOMETHING", itemPhoto: UIImage(named:"default"), id:TrackedItem.generateItemKey())
+    let seedItem: TrackedItem = TrackedItem(name: "ME",location: CLLocation(latitude: CLLocationDegrees("40.730872")!, longitude: CLLocationDegrees("-74.003066")!), description: "SOMETHING", itemPhoto: UIImage(named:"default"), id:TrackedItem.generateItemKey())
     var seedItemRatings : [Rating]? { return [Rating(trackedItem: seedItem.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: seedItem.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: seedItem.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: seedItem.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: seedItem.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: seedItem.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: seedItem.itemID, rating: 5, description: "Good shit")] }
     
     
@@ -81,6 +81,7 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location:CLLocation = locations.last!
         self.seedItem.location = location
+        print(location)
         if (self.selectedIndex == 0 && self.requiresMapUpdate) {
             self.requiresMapUpdate = false
             let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
@@ -146,14 +147,7 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
             selectedRowExists = false
             
         }
-        if (selectedRowExists) {
-            if !mapView.annotations.isEmpty {
-                mapView.removeAnnotations(mapView.annotations)
-            }
-            let currItemPin = MKPointAnnotation()
-            currItemPin.coordinate = items[selectedRowIndex].location.coordinate
-            mapView.addAnnotation(currItemPin)
-        }
+        
         tableView.reloadRowsAtIndexPaths(needToUpdateRows, withRowAnimation: UITableViewRowAnimation.Automatic)
         
         
@@ -202,7 +196,18 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     }
     
     func mapViewScreen() {
-        
+        if (selectedRowExists) {
+            if !mapView.annotations.isEmpty {
+                mapView.removeAnnotations(mapView.annotations)
+            }
+            let currItemPin = MKPointAnnotation()
+            currItemPin.coordinate = items[selectedRowIndex].location.coordinate
+            let center = currItemPin.coordinate
+            let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+            
+            self.mapView.setRegion(region, animated: true)
+            mapView.addAnnotation(currItemPin)
+        }
     }
     
 
