@@ -141,14 +141,12 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
         }
         else if (selectedRowIndex == indexPath.row && selectedRowExists) {
             self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: self.selectedRowIndex, inSection: 0))?.setSelected(false, animated: true)
-            
             selectedRowIndex = -1
             selectedRowExists = false
-            
         }
         
         tableView.reloadRowsAtIndexPaths(needToUpdateRows, withRowAnimation: UITableViewRowAnimation.Automatic)
-        
+        mapViewScreen()
         
     }
     
