@@ -74,7 +74,6 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
         tableView.registerClass(TableHeader.self, forHeaderFooterViewReuseIdentifier: "header")
         tableView.registerClass(RatingListTableViewCell.self, forCellReuseIdentifier: "cell")
 
-        
         self.view.addSubview(tableView)
     }
     
@@ -87,6 +86,19 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
             let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
             
             self.mapView.setRegion(region, animated: true)
+        }
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            // Delete the row from the data source
+            ratings.removeValueForKey(items[indexPath.row].itemID)
+            saveRatings()
+            items.removeAtIndex(indexPath.row)
+            saveItems()
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        } else if editingStyle == .Insert {
+            addItem()
         }
     }
     
