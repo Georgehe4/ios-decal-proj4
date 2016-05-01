@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A348EA91CD6A6F100B40F50 /* TrackedItemSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A348EA81CD6A6F100B40F50 /* TrackedItemSearchBar.swift */; };
 		5A925FF61CCF66AF002A8EC2 /* AddNewItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A925FF51CCF66AF002A8EC2 /* AddNewItemViewController.swift */; };
 		5E32ECD11CC8479F0060D721 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E32ECD01CC8479F0060D721 /* AppDelegate.swift */; };
 		5E32ECD31CC8479F0060D721 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E32ECD21CC8479F0060D721 /* ViewController.swift */; };
@@ -49,6 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5A348EA81CD6A6F100B40F50 /* TrackedItemSearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackedItemSearchBar.swift; sourceTree = "<group>"; };
 		5A925FF51CCF66AF002A8EC2 /* AddNewItemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewItemViewController.swift; sourceTree = "<group>"; };
 		5E32ECCD1CC8479F0060D721 /* grepIRL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = grepIRL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E32ECD01CC8479F0060D721 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 		5E32ECC41CC8479F0060D721 = {
 			isa = PBXGroup;
 			children = (
+				5A348EA81CD6A6F100B40F50 /* TrackedItemSearchBar.swift */,
 				5E32ECCF1CC8479F0060D721 /* grepIRL */,
 				5E32ECE41CC847A00060D721 /* grepIRLTests */,
 				5E32ECEF1CC847A00060D721 /* grepIRLUITests */,
@@ -382,6 +385,7 @@
 				5E5EF1561CD3465B00CFB8B6 /* DPDUIView+Extension.swift in Sources */,
 				5E5EF1541CD3465B00CFB8B6 /* DPDConstants.swift in Sources */,
 				5A925FF61CCF66AF002A8EC2 /* AddNewItemViewController.swift in Sources */,
+				5A348EA91CD6A6F100B40F50 /* TrackedItemSearchBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

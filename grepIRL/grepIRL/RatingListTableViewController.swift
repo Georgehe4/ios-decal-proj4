@@ -38,7 +38,9 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
         definesPresentationContext = true
+        searchController.hidesNavigationBarDuringPresentation = false
         tableView.tableHeaderView = searchController.searchBar
+        
         
         self.requiresMapUpdate = true
         self.locationManager.requestAlwaysAuthorization()
@@ -138,6 +140,9 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
         cell.trackedItem = cellItem
         cell.textLabel?.text = cellItem.name
         cell.detailTextLabel?.text = ""
+        let imgviewFrame = CGRectMake(cell.frame.minX + 10, cell.frame.minY + 10, cell.frame.width - 20, cell.frame.height - 20)
+        cell.imageView?.frame = imgviewFrame
+        cell.imageView!.image = cellItem.itemPhoto
         
         let screen = UIScreen.mainScreen().bounds.size
         let button : UIButton = UIButton(type: UIButtonType.System)
@@ -327,9 +332,7 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     }
     
     func filterContentForSearchText(searchText: String, scope: String = "All") {
-        let newTblViewFrm = CGRectMake(searchController.searchBar.frame.minX, searchController.searchBar.frame.minY, tableView.frame.width, tableView.frame.height + (tableView.frame.minY - searchController.searchBar.frame.minY))
-        tableView.frame = newTblViewFrm
-        
+        searchController.searchBar.sizeToFit()
         filterItems = items.filter { item in
             return item.name.lowercaseString.containsString(searchText.lowercaseString)
         }
