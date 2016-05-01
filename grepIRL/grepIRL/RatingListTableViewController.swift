@@ -222,7 +222,12 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     }
     
     func saveNewRating(newRating: Rating) {
-        self.ratings[newRating.relatedItemID]!.append(newRating)
+        if (ratings[newRating.relatedItemID]) != nil {
+            self.ratings[newRating.relatedItemID]!.append(newRating)
+        }
+        else {
+            self.ratings[newRating.relatedItemID] = [newRating]
+        }
         self.tableView.reloadData()
         saveRatings()
     }
