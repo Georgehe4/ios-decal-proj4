@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class RatingListTableViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,MKMapViewDelegate,CLLocationManagerDelegate, AddNewItemViewControllerDelegate, AddRatingViewControllerDelegate {
+class RatingListTableViewController: UIViewController,UITableViewDelegate, UITableViewDataSource,MKMapViewDelegate,CLLocationManagerDelegate, AddNewItemViewControllerDelegate, AddRatingViewControllerDelegate, UISearchResultsUpdating {
     //var trackedItems: [TrackedItem]!
     let locationManager = CLLocationManager()
     var requiresMapUpdate = false
@@ -26,12 +26,20 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     
     
     var items: [TrackedItem] = []
+    var filterItems = [TrackedItem]()
     
     var selectedRowIndex = -1
     var selectedRowExists = false
     
+    let searchController = UISearchController(searchResultsController: nil)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        definesPresentationContext = true
+        tableView.tableHeaderView = searchController.searchBar
+        
         self.requiresMapUpdate = true
         self.locationManager.requestAlwaysAuthorization()
         
@@ -80,7 +88,7 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location:CLLocation = locations.last!
-        self.seedItem.location = location
+//        self.seedItem.location = location
         if (self.selectedIndex == 0 && self.requiresMapUpdate) {
             self.requiresMapUpdate = false
             let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
@@ -91,6 +99,9 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if searchController.active && searchController.searchBar.text != "" {
+            return filterItems.count
+        }
         return self.items.count
     }
     
@@ -100,7 +111,12 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {        
         var cell:RatingListTableViewCell = tableView.dequeueReusableCellWithIdentifier("cell")! as! RatingListTableViewCell
-        let cellItem = self.items[indexPath.row]
+        var cellItem = self.items[indexPath.row]
+        if searchController.active && searchController.searchBar.text != "" {
+            cellItem = filterItems[indexPath.row]
+        } else {
+            cellItem = items[indexPath.row]
+        }
         for (id, rates) in ratings {
             if (cellItem.itemID == id) {
                 cellItem.ratings = rates
@@ -205,6 +221,16 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
             self.mapView.setRegion(region, animated: true)
             mapView.addAnnotation(currItemPin)
         }
+        else {
+            if !mapView.annotations.isEmpty {
+                mapView.removeAnnotations(mapView.annotations)
+            }
+            let center = mapView.userLocation.coordinate
+            let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+            
+            self.mapView.setRegion(region, animated: true)
+        }
+        locationManager.startUpdatingLocation()
     }
     
 
@@ -282,6 +308,19 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
             
         }
         return 44
+    }
+    
+    func updateSearchResultsForSearchController(_: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
+    }
+    
+    func filterContentForSearchText(searchText: String, scope: String = "All") {
+        
+        filterItems = items.filter { item in
+            return item.name.lowercaseString.containsString(searchText.lowercaseString)
+        }
+        
+        tableView.reloadData()
     }
 
 
