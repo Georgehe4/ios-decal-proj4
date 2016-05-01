@@ -146,6 +146,14 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
             selectedRowExists = false
             
         }
+        if (selectedRowExists) {
+            if !mapView.annotations.isEmpty {
+                mapView.removeAnnotations(mapView.annotations)
+            }
+            let currItemPin = MKPointAnnotation()
+            currItemPin.coordinate = items[selectedRowIndex].location.coordinate
+            mapView.addAnnotation(currItemPin)
+        }
         tableView.reloadRowsAtIndexPaths(needToUpdateRows, withRowAnimation: UITableViewRowAnimation.Automatic)
         
         

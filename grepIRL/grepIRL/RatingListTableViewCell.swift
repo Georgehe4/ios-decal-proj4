@@ -34,6 +34,7 @@ class RatingListTableViewCell: UITableViewCell {
                 
             }
             
+            
         }
         else {
             detailTextLabel?.text = ""
