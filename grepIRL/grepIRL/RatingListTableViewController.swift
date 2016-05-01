@@ -81,7 +81,6 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location:CLLocation = locations.last!
         self.seedItem.location = location
-        print(location)
         if (self.selectedIndex == 0 && self.requiresMapUpdate) {
             self.requiresMapUpdate = false
             let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
