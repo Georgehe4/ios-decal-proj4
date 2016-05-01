@@ -65,7 +65,7 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
         
         navigationItem.title = "GREP_IRL"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add new item", style: .Plain, target: self, action: #selector(RatingListTableViewController.addItem))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Map", style: .Plain, target: self, action: #selector(RatingListTableViewController.mapViewScreen))
+        //navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Map", style: .Plain, target: self, action: #selector(RatingListTableViewController.mapViewScreen))
         
         mapView.mapType = .Standard
         mapView.showsUserLocation = true
@@ -82,7 +82,6 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
         tableView.registerClass(TableHeader.self, forHeaderFooterViewReuseIdentifier: "header")
         tableView.registerClass(RatingListTableViewCell.self, forCellReuseIdentifier: "cell")
 
-        
         self.view.addSubview(tableView)
     }
     
@@ -95,6 +94,19 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
             let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
             
             self.mapView.setRegion(region, animated: true)
+        }
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            // Delete the row from the data source
+            ratings.removeValueForKey(items[indexPath.row].itemID)
+            saveRatings()
+            items.removeAtIndex(indexPath.row)
+            saveItems()
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        } else if editingStyle == .Insert {
+            addItem()
         }
     }
     
