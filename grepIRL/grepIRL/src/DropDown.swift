@@ -61,6 +61,10 @@ public final class DropDown: UIView {
 	public weak var anchorView: UIView? {
 		didSet { setNeedsUpdateConstraints() }
 	}
+    
+    public var valueLabel: UILabel? {
+        didSet { setNeedsUpdateConstraints() }
+    }
 	
 	/**
 	The possible directions where the drop down will be showed.
@@ -650,7 +654,6 @@ extension DropDown {
 	/// Returns the selected item.
 	public var selectedItem: String? {
 		guard let row = tableView.indexPathForSelectedRow?.row else { return nil }
-		
 		return dataSource[row]
 	}
 	
@@ -697,8 +700,15 @@ extension DropDown: UITableViewDataSource, UITableViewDelegate {
 	public func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 		selectedRowIndex = indexPath.row
 		selectionAction?(selectedRowIndex!, dataSource[selectedRowIndex!])
+        updateLabel(selectedItem)
 		hide()
 	}
+    
+    public func updateLabel(newVal : String?) {
+        if let _ = self.valueLabel {
+            self.valueLabel?.text = newVal
+        }
+    }
 	
 }
 

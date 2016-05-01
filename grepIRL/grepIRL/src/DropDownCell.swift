@@ -28,6 +28,7 @@ internal extension DropDownCell {
 		super.awakeFromNib()
 		
 		backgroundColor = UIColor.clearColor()
+        
 	}
 	
 	override var selected: Bool {

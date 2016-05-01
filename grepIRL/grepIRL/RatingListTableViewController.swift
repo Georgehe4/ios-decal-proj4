@@ -21,8 +21,8 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     
     var ratings: [Int: [Rating]] = [:] //Map from objectID to rating
     
-    let ownObject: TrackedItem = TrackedItem(name: "ME",location: CLLocation(latitude: CLLocationDegrees("0")!, longitude: CLLocationDegrees("0")!), description: "SOMETHING", itemPhoto: UIImage(named:"default"), id:TrackedItem.generateItemKey())
-    var ooRatings : [Rating]? { return [Rating(trackedItem: ownObject.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: ownObject.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: ownObject.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: ownObject.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: ownObject.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: ownObject.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: ownObject.itemID, rating: 5, description: "Good shit")] }
+    let seedItem: TrackedItem = TrackedItem(name: "ME",location: CLLocation(latitude: CLLocationDegrees("0")!, longitude: CLLocationDegrees("0")!), description: "SOMETHING", itemPhoto: UIImage(named:"default"), id:TrackedItem.generateItemKey())
+    var seedItemRatings : [Rating]? { return [Rating(trackedItem: seedItem.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: seedItem.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: seedItem.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: seedItem.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: seedItem.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: seedItem.itemID, rating: 5, description: "Good shit"), Rating(trackedItem: seedItem.itemID, rating: 5, description: "Good shit")] }
     
     
     var items: [TrackedItem] = []
@@ -43,12 +43,13 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
         
         items = loadItems()!
         
+        print(items)
         if (items.isEmpty) {
-            items.append(ownObject)
+            items.append(seedItem)
             print("We have items")
-            if let _ = ooRatings {
+            if let _ = seedItemRatings {
                 print("Ratings exist")
-                ratings[ownObject.itemID] = ooRatings
+                ratings[seedItem.itemID] = seedItemRatings
             }
         }
         
@@ -79,7 +80,7 @@ class RatingListTableViewController: UIViewController,UITableViewDelegate, UITab
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location:CLLocation = locations.last!
-        self.ownObject.location = location
+        self.seedItem.location = location
         if (self.selectedIndex == 0 && self.requiresMapUpdate) {
             self.requiresMapUpdate = false
             let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)

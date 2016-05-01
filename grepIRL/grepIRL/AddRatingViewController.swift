@@ -32,6 +32,7 @@ class AddRatingViewController: UIViewController {
     var imagePicker = UIImagePickerController()
     
     let dropDown = DropDown()
+    let ratingLabel = UILabel()
     let dropDownButton = UIButton()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,10 +60,19 @@ class AddRatingViewController: UIViewController {
         let buttonY = itemNameLy + spacing + itemNameLheight
         let buttonHeight = CGFloat(40)
         let buttonWidth = CGFloat(100)
-        dropDownButton.frame = CGRectMake(itemNameLx, itemNameLy + itemNameLheight+spacing, buttonWidth, buttonHeight)
+        
+        ratingLabel.frame = CGRectMake(itemNameLx, itemNameLy + itemNameLheight+spacing, buttonWidth, buttonHeight)
+        ratingLabel.text = "-"
+        ratingLabel.layer.borderWidth = CGFloat(1)
+        ratingLabel.layer.borderColor = UIColor.blackColor().CGColor
+        ratingLabel.textAlignment = NSTextAlignment.Center
+        self.view.addSubview(ratingLabel)
+        
+        dropDownButton.frame = CGRectMake(itemNameLx + ratingLabel.frame.width, itemNameLy + itemNameLheight+spacing, buttonWidth, buttonHeight)
         dropDownButton.backgroundColor = UIColor.redColor()
         dropDownButton.addTarget(self, action: #selector(self.showOrDismiss(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(dropDownButton)
+
         
         dropDown.anchorView = dropDownButton
         dropDown.direction = .Any
@@ -70,6 +80,7 @@ class AddRatingViewController: UIViewController {
         dropDown.dataSource = ["1", "2", "3", "4", "5"]
         dropDown.width = 100
         dropDown.dismissMode = .Automatic
+        dropDown.valueLabel = ratingLabel
         
         let itemDLx = itemNameLx
         let itemDLy = buttonY + buttonHeight + spacing
@@ -97,6 +108,9 @@ class AddRatingViewController: UIViewController {
         if dropDown.hidden {
             dropDown.show()
         } else {
+            if let selectedItemString = dropDown.selectedItem {
+                ratingLabel.text = selectedItemString
+            }
             dropDown.hide()
         }
     }
@@ -112,7 +126,12 @@ class AddRatingViewController: UIViewController {
     
     func saveItem() {
         let item = Int(dropDown.selectedItem!)
-        let addedRating = Rating(trackedItem: relatedItemID, rating: item!, description: "")
+        var ratingDescrip = self.itemDescripTextField.text
+        if (ratingDescrip == "") {
+            ratingDescrip = "No comment"
+        }
+
+        let addedRating = Rating(trackedItem: relatedItemID, rating: item!, description: ratingDescrip)
         delegate?.saveNewRating(addedRating)
         self.navigationController?.popViewControllerAnimated(true)
     }
