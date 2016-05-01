@@ -33,7 +33,7 @@ class AddRatingViewController: UIViewController {
     
     let dropDown = DropDown()
     let ratingLabel = UILabel()
-    let dropDownButton = UIButton()
+    let dropDownButton = UIButton(type: UIButtonType.System)
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,20 +56,22 @@ class AddRatingViewController: UIViewController {
         itemNameLabel.text = itemName
         self.view.addSubview(itemNameLabel)
         
-        dropDownButton.setTitle("Rate", forState: UIControlState.Normal)
+        dropDownButton.setTitle("🔽", forState: UIControlState.Normal)
         let buttonY = itemNameLy + spacing + itemNameLheight
         let buttonHeight = CGFloat(40)
-        let buttonWidth = CGFloat(100)
+        let buttonWidth = CGFloat(40)
         
-        ratingLabel.frame = CGRectMake(itemNameLx, itemNameLy + itemNameLheight+spacing, buttonWidth, buttonHeight)
+        ratingLabel.frame = CGRectMake(itemNameLx, itemNameLy + itemNameLheight+spacing, CGFloat(60), buttonHeight)
         ratingLabel.text = "-"
         ratingLabel.layer.borderWidth = CGFloat(1)
-        ratingLabel.layer.borderColor = UIColor.blackColor().CGColor
+        ratingLabel.layer.borderColor = UIColor.grayColor().CGColor
         ratingLabel.textAlignment = NSTextAlignment.Center
+        ratingLabel.layer.cornerRadius = CGFloat(5)
+        ratingLabel.layer.masksToBounds = true
         self.view.addSubview(ratingLabel)
         
-        dropDownButton.frame = CGRectMake(itemNameLx + ratingLabel.frame.width, itemNameLy + itemNameLheight+spacing, buttonWidth, buttonHeight)
-        dropDownButton.backgroundColor = UIColor.redColor()
+        dropDownButton.frame = CGRectMake(itemNameLx + ratingLabel.frame.width + CGFloat(5), itemNameLy + itemNameLheight+spacing, buttonWidth, buttonHeight)
+//        dropDownButton.backgroundColor = UIColor.redColor()
         dropDownButton.addTarget(self, action: #selector(self.showOrDismiss(_:)), forControlEvents: .TouchUpInside)
         self.view.addSubview(dropDownButton)
 
