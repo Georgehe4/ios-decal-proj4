@@ -16,14 +16,17 @@ restrooms, and meeting areas.
 * Rating 
 * Geotagging
 * Photos
-* Multi-user [Server information]
+~~ * Multi-user [Server information] ~~
 * Categories/Tags on items
 * Mapping of items
 
 ## Control Flow
 * Open app
 * List view of items nearby
-   * Optional map view of items
+   * ~~ Optional ~~ map view of items
+   * (new addition)
+   * when item is selected, places pin on map and centers on pin
+   * when none selected, centers on current location
 * Tap on an item to open it (information about reviews, pictures, etc)
 * Option to add review/add item
     * Tag/classify/rate/pictures
@@ -32,27 +35,31 @@ restrooms, and meeting areas.
 
 ### Model
 * Rating.swift
-    * ID to item
+~~    * ID to item ~~
     * 1~5 rating
     * Description
-    * Optional picture
+~~    * Optional picture ~~
     * Rating helpfulness 
 
 * Item.swift
     * Geolocation of item
     * Description of item
     * Tags of item
+    * (things added as project went on/reworked)
+    * Photo of item
+    * ID to item
+    * Name of item (mandatory for search)
 
 ### View
-* RatingListTableView
-* RatingMapView
-* AddRatingView
-* SingleRatingView
-* ItemSummaryView
+~~ * RatingListTableView (main view) ~~
+~~ * RatingMapView ~~
+~~ * AddRatingView ~~
+~~ * SingleRatingView ~~
+~~ * ItemSummaryView ~~
 
 ### Controller
 * RatingListTableViewController
-* RatingMapViewController
+~~ * RatingMapViewController ~~
 * AddRatingViewController
-* SingleRatingViewController
-* ItemSummaryViewController
+* ~~ Single ~~ AddRatingViewController
+~~ * ItemSummaryViewController ~~
