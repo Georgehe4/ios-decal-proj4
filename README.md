@@ -23,6 +23,7 @@ restrooms, and meeting areas.
 ## Control Flow
 * Open app
 * List view of items nearby
+   * Location needs to be set in XCode before allowing access to location
    * ~~ Optional ~~ map view of items
    * (new addition)
    * when item is selected, places pin on map and centers on pin
